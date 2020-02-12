@@ -3,7 +3,7 @@ with Ada.Containers.Indefinite_Ordered_Maps;
 
 procedure Leader_Election is
 
-   subtype Node_ID is Natural range 1 .. 5;
+   subtype Node_ID is Natural range 1 .. 20;
 
    type Msg_T is record
      L_elected   : Boolean;
@@ -67,7 +67,7 @@ procedure Leader_Election is
         if not Elected then
  
           if Trial.Challenge = ID and not Elected then 
-            Put_Line("ELECT:" & Node_ID'Image(ID) & " Leader!");
+            Put_Line("ELECT:" & Node_ID'Image(ID));
             Elected       := True;
 
           elsif Trial.Challenge > Current then Current := Trial.Challenge;
@@ -78,6 +78,9 @@ procedure Leader_Election is
         end if;
 
       end loop;
+      if Elected then 
+        Put_Line(Node_ID'Image(ID) & " Elected Leader!");
+      end if;
    end node;
 
    New_Node : Node_Access;
